@@ -3,22 +3,22 @@ import { test, expect } from '@playwright/test';
 test.beforeEach(async ({ page }) => {
     await page.goto('http://localhost:3000/');
     const userData = {
-      userName: "Heath93",
-      password: "s3cret",
+        userName: "Heath93",
+        password: "s3cret",
     };
     await page.getByRole("textbox", { name: "username" }).fill(userData.userName);
     await page.getByRole("textbox", { name: "password" }).fill(userData.password);
     await page.getByTestId('signin-submit').click();
 });
-// 3. Verify that the notifactions has 8 items items list
+// 3. Verify that the notifications has 8 items items list
 // 4. Verify that after dismissing a notification, the notifications displays the remaining notifications
-test.describe('Notication', () => {
+test.describe('Notification', () => {
     test('display 8 items list noti ', async ({ page }) => {
         const noti = page.getByTestId('nav-top-notifications-count');
         const notificationsList = page.locator('[data-test="notifications-list"]');
         const items = notificationsList.locator('li');
         await expect(noti).toBeVisible();
-          const notificationsLink = page.getByTestId('nav-top-notifications-link');
+        const notificationsLink = page.getByTestId('nav-top-notifications-link');
         await notificationsLink.click();
         await expect(page).toHaveURL(/notifications/);
         await expect(notificationsList).toBeVisible();
