@@ -6,7 +6,7 @@ test.describe('Mock API - Notification', () => {
             const mockResponse1 = {
                 "results": [
                     {
-                        "userFullName": "Trang xinh gai",
+                        "userFullName": "Trang Nguyen",
                         "id": "5EPOA_hPA39U",
                         "uuid": "ab4c2288-d63c-442d-aef4-4781ff1f5e6e",
                         "userId": "WHjJ4qR2R2",

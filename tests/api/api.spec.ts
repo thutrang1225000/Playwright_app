@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test"
 
-test('check api get auth token', async ({ request }) => { //request là 1 context của test
+test('check api get all bookings', async ({ request }) => { //request là 1 context của test
     const response = await request.get('https://restful-booker.herokuapp.com/booking')
     console.log(await response.json())
     //Test API cần test: response trả về có ok không? 
@@ -11,13 +11,14 @@ test('check api get auth token', async ({ request }) => { //request là 1 contex
     expect(responseBody.length).toBeGreaterThan(0); //check xem responseBody có bị empty không?
 })
 test('check api get a booking by ID ', async ({ request }) => {
-    const bookingID = 4767;
+    const bookingID = 4870;
     const response = await request.get(`https://restful-booker.herokuapp.com/booking/${bookingID}`)
     console.log(await response.json())
     expect(response.ok()).toBeTruthy()
     expect(response.status()).toBe(200)
     const responseBody = await response.json();
-    expect(responseBody).toHaveProperty('firstname', 'Trang'); // check xem data trả về có firstname= john ko
+    expect(responseBody).toHaveProperty('firstname', 'Trang'); // check xem data trả về có firstname= Trang ko
+    expect(responseBody).toHaveProperty('lastname', 'Thu'); // check xem data trả về có lastname= Taylor ko
 })
 test('check api create a new booking by ID ', async ({ request }) => {
     const response = await request.post('https://restful-booker.herokuapp.com/booking', {
@@ -135,7 +136,7 @@ test('check api delete a booking by ID', async ({ request }) => {
     token = authResponse.token;
     console.log(token);
     //Update Booking
-    const deleteResponse = await request.delete(`https://restful-booker.herokuapp.com/booking/4767`,
+    const deleteResponse = await request.delete(`https://restful-booker.herokuapp.com/booking/3731`,
         {
             headers: {
                 'Content-type': 'application/json',
@@ -145,11 +146,15 @@ test('check api delete a booking by ID', async ({ request }) => {
         }
 
     )
+    expect(deleteResponse.ok()).toBeTruthy()
+    expect(deleteResponse.status()).toBe(201)
     //// verify bookingID đó đã xóa
-    const getBookingResponse = await request.get(`https://restful-booker.herokuapp.com/booking/4767`,
-    )
+    const getBookingResponse = await request.get(`https://restful-booker.herokuapp.com/booking/3731`)
     expect(getBookingResponse.status()).toBe(404)
 })
+
+
+
 
 
 // test.describe('api lesson', () => {

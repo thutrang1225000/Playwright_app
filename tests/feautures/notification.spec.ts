@@ -25,10 +25,11 @@ test.describe('Notification', () => {
         await expect(items).toHaveCount(8);
 
     });
+
     test('dismiss noti ', async ({ page }) => {
         const notificationsList = page.getByTestId('notifications-list');
         const items = notificationsList.locator('li');
-        // Kiểm tra mỗi item có nút Dismiss
+        //Kiểm tra mỗi item có nút Dismiss
         for (let i = 0; i < await items.count(); i++) {
             const item = items.nth(i);
             const dismissButton = item.getByTestId('notification-mark-read');
@@ -46,7 +47,17 @@ test.describe('Notification', () => {
             await expect(items).toHaveCount(countBefore - 1);
 
         }
-
+        // console.log('trang 1');
+        // for (const item of await items.all()) {
+        //     const itemName = await item.textContent();
+        //     console.log(itemName + ' trang 2' + item);
+        //     // const dismissButton = item.getByTestId('notification-mark-read');
+        //     // await expect(dismissButton).toBeVisible();
+        //     // await expect(dismissButton).toHaveText('Dismiss');
+        //     // await dismissButton.click();
+        //     // const countBefore = await items.count();
+        //     // await expect(items).toHaveCount(countBefore - 1);
+        // }
     });
 
 });
