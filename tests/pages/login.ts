@@ -2,14 +2,15 @@ import { Page, Locator } from "@playwright/test";
 
 
 export class LoginPage {
-    private readonly usernameInput: Locator; // khai báo biến usernameInput là 1 locator
+    private readonly usernameInput: Locator;
     private readonly passwordInput: Locator;
     private readonly signinButton: Locator;
-
+    // private readonly page: Page;
     constructor(page: Page) {
-        this.usernameInput = page.getByRole("textbox", { name: "username" }); // khai báo locator usernameInput
+        this.usernameInput = page.getByRole("textbox", { name: "username" });
         this.passwordInput = page.getByRole("textbox", { name: "password" });
         this.signinButton = page.getByTestId('signin-submit');
+        // this.page = page;
     }
     async goto(url: string) {
         await this.goto(url)

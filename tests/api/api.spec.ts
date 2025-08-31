@@ -11,14 +11,14 @@ test('check api get all bookings', async ({ request }) => { //request là 1 cont
     expect(responseBody.length).toBeGreaterThan(0); //check xem responseBody có bị empty không?
 })
 test('check api get a booking by ID ', async ({ request }) => {
-    const bookingID = 4870;
+    const bookingID = 393;
     const response = await request.get(`https://restful-booker.herokuapp.com/booking/${bookingID}`)
     console.log(await response.json())
     expect(response.ok()).toBeTruthy()
     expect(response.status()).toBe(200)
     const responseBody = await response.json();
-    expect(responseBody).toHaveProperty('firstname', 'Trang'); // check xem data trả về có firstname= Trang ko
-    expect(responseBody).toHaveProperty('lastname', 'Thu'); // check xem data trả về có lastname= Taylor ko
+    expect(responseBody).toHaveProperty('firstname', 'John'); // check xem data trả về có firstname= Trang ko
+    expect(responseBody).toHaveProperty('lastname', 'Smith'); // check xem data trả về có lastname= Taylor ko
 })
 test('check api create a new booking by ID ', async ({ request }) => {
     const response = await request.post('https://restful-booker.herokuapp.com/booking', {
@@ -153,9 +153,34 @@ test('check api delete a booking by ID', async ({ request }) => {
     expect(getBookingResponse.status()).toBe(404)
 })
 
+test('Try accessing a non-existent booking ID', async ({ request }) => {
+    const bookingID = 4870;
+    const response = await request.get(`https://restful-booker.herokuapp.com/booking/${bookingID}`)
+    expect(response.status()).toBe(404);
 
-
-
+});
+test('Try create a booking with missing required fields', async ({ request }) => {
+    const response = await request.post(`https://restful-booker.herokuapp.com/booking`, {
+        data: {
+            firstname: 'Trang',
+            lastname: 'Taylor',
+            totalprice: 115,
+            depositpaid: false,
+        }
+    })
+    expect(response.status()).toBe(500);
+});
+test('Try update a booking without auth token', async ({ request }) => {
+    const response = await request.put(`https://restful-booker.herokuapp.com/booking/4767`, {
+        data: {
+            firstname: 'Trang',
+            lastname: 'Taylor',
+            totalprice: 115,
+            depositpaid: false,
+        }
+    })
+    expect(response.status()).toBe(403);
+})
 
 // test.describe('api lesson', () => {
 //     test.beforeEach('get an unique ID', async ({ request }) => {
